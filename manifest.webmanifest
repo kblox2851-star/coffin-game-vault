@@ -1,0 +1,9 @@
+{
+  "name": "Coffin Game Vault",
+  "short_name": "Game Vault",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#100d12",
+  "theme_color": "#100d12",
+  "description": "A mobile-friendly personal game file library."
+}

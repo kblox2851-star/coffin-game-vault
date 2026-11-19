@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100d12">
+<meta name="description" content="A mobile-friendly personal game library for The Coffin of Andy and Leyley.">
+<link rel="manifest" href="manifest.webmanifest">
+<title>COFFIN // Game Vault</title>
+<style>
+:root{color-scheme:dark;--bg:#100d12;--panel:#1a151d;--panel2:#241c27;--line:#3a2c3d;--ink:#f4edf4;--muted:#b7a8b8;--pink:#d58ab2;--red:#a94b62;--gold:#d5b78a}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 80% -10%,#462338 0,transparent 42%),linear-gradient(160deg,#100d12,#17111a 65%,#0d0b10);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input{font:inherit} button{cursor:pointer}
+.wrap{max-width:920px;margin:auto;padding:env(safe-area-inset-top) 16px calc(24px + env(safe-area-inset-bottom))}
+header{padding:26px 2px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:11px}.sigil{width:42px;height:42px;border:1px solid var(--pink);border-radius:12px;display:grid;place-items:center;color:var(--pink);font-size:21px;background:#241722}
+.eyebrow{font-size:10px;letter-spacing:.24em;color:var(--pink);font-weight:800}.brand h1{font-size:17px;letter-spacing:.09em;margin:1px 0 0}
+.pill{border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:var(--muted);font-size:11px;white-space:nowrap}
+.creator-stamp{margin:8px 2px 18px;padding:15px 12px 13px;position:relative;isolation:isolate;text-align:center;transform:rotate(-1deg)}
+.creator-stamp:before{content:"";position:absolute;z-index:-1;inset:7px 2% 8px;background:linear-gradient(176deg,transparent 0 8%,#7e182b 9% 18%,#b3263e 19% 72%,#7e182b 73% 88%,transparent 89%),linear-gradient(90deg,transparent,#c63a4d 14%,#8e1d31 82%,transparent);clip-path:polygon(2% 13%,9% 5%,18% 10%,28% 1%,38% 8%,50% 0,62% 9%,74% 2%,85% 10%,98% 4%,96% 87%,87% 94%,76% 89%,65% 100%,53% 91%,42% 98%,30% 91%,19% 97%,8% 90%,1% 96%);filter:drop-shadow(0 5px 7px #0009)}
+.paint-label{display:block;font-size:10px;letter-spacing:.28em;font-weight:900;color:#ffe1e4;text-shadow:0 2px 3px #370812}
+.paint-title{display:block;margin-top:3px;font-size:clamp(17px,5.2vw,25px);line-height:1.12;letter-spacing:.035em;font-weight:1000;color:#fff0f0;text-shadow:1px 2px 0 #641020,0 0 12px #ff9aa8aa}
+.hero{border:1px solid var(--line);border-radius:22px;padding:24px 20px;background:linear-gradient(120deg,#281923dd,#17131bdc);position:relative;overflow:hidden}
+.hero:after{content:"✦";position:absolute;right:20px;top:12px;font-size:92px;color:#d58ab21a}
+.hero h2{font-size:clamp(25px,7vw,42px);line-height:1.04;letter-spacing:-.04em;margin:8px 0 12px;max-width:560px}
+.hero p{color:var(--muted);max-width:560px;margin:0 0 20px}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{border:1px solid var(--line);border-radius:13px;padding:12px 15px;background:var(--panel2);color:var(--ink);font-weight:700;min-height:46px}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:#1a1018}
+.btn:active{transform:scale(.98)} .btn:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+section{margin-top:24px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:12px}
+.section-head h3{margin:0;font-size:15px;letter-spacing:.08em}.hint{color:var(--muted);font-size:12px}
+.drop{border:1px dashed #79536c;border-radius:18px;padding:22px 16px;text-align:center;background:#1a141c}
+.drop strong{display:block;margin-bottom:4px}.drop p{margin:0 0 14px;color:var(--muted);font-size:13px}
+.library{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;min-width:0}
+.item-top{display:flex;gap:10px;align-items:center}.fileicon{width:40px;height:40px;border-radius:12px;background:#30202e;display:grid;place-items:center;color:var(--pink);font-size:19px;flex:none}
+.filename{font-weight:700;overflow-wrap:anywhere}.meta{font-size:11px;color:var(--muted);margin-top:2px}
+.item-actions{display:flex;gap:8px;margin-top:12px}.item-actions .btn{flex:1;padding:9px 10px;min-height:40px;font-size:12px}
+.empty{border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center;color:var(--muted);grid-column:1/-1}
+.note{font-size:12px;color:var(--muted);border-left:2px solid var(--red);padding:9px 12px;background:#1b141b;border-radius:0 10px 10px 0}
+footer{text-align:center;color:#867987;font-size:11px;padding:28px 8px 8px}
+#fileInput{display:none}.danger{color:#e5a3ad}
+@media(min-width:650px){.wrap{padding-left:24px;padding-right:24px}.hero{padding:32px}.drop{padding:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div class="brand"><div class="sigil">†</div><div><div class="eyebrow">PERSONAL GAME VAULT</div><h1>COFFIN // ANDY & LEYLEY</h1></div></div>
+ <div class="pill">MOBILE EDITION</div>
+</header>
+<main>
+ <div class="creator-stamp" aria-label="Created by vandism for the one and only mommy">
+  <span class="paint-label">CREATED BY VANDISM</span>
+  <span class="paint-title">FOR THE ONE &amp; ONLY MOMMY</span>
+ </div>
+ <div class="hero">
+  <div class="eyebrow">YOUR FILES. YOUR RULES.</div>
+  <h2>The Coffin<br>Game Vault</h2>
+  <p>A dark little home for your game files, notes, screenshots, and extras. Built to fit your phone screen.</p>
+  <div class="actions">
+   <button class="btn primary" id="addTop">＋ Add files</button>
+   <button class="btn" id="installBtn" hidden>Install launcher</button>
+  </div>
+ </div>
+ <section>
+  <div class="section-head"><h3>01 / IMPORT</h3><span class="hint">Choose files from your device</span></div>
+  <div class="drop">
+   <strong>Bring your files into the vault</strong>
+   <p>Tap below to select game-related files, images, documents, or archives.</p>
+   <button class="btn primary" id="addBtn">Choose files</button>
+   <input id="fileInput" type="file" multiple>
+  </div>
+ </section>
+ <section>
+  <div class="section-head"><h3>02 / YOUR LIBRARY</h3><span class="hint" id="count">0 items</span></div>
+  <div class="library" id="library"><div class="empty">Your vault is empty.<br>Add files to see them here.</div></div>
+ </section>
+ <section>
+  <div class="section-head"><h3>03 / IMPORTANT NOTE</h3></div>
+  <div class="note">This is a mobile file-library launcher, not an emulator. Android cannot run the Windows version of the game just by adding its .exe or game folder. Compatible files can be opened with Android apps; PC game files need a compatible PC or streaming setup.</div>
+ </section>
+</main>
+<footer>COFFIN // GAME VAULT · LOCAL SESSION · MADE FOR MOBILE</footer>
+</div>
+<script>
+const input=document.getElementById('fileInput'), library=document.getElementById('library'), count=document.getElementById('count');
+let entries=[];
+const fmt=n=>n<1024?`${n} B`:n<1048576?`${(n/1024).toFixed(1)} KB`:`${(n/1048576).toFixed(1)} MB`;
+function icon(f){const ext=(f.name.split('.').pop()||'').toLowerCase();if(['png','jpg','jpeg','webp','gif'].includes(ext))return '▧';if(['pdf','txt','md'].includes(ext))return '▤';if(['zip','rar','7z'].includes(ext))return '▣';if(['exe','dll'].includes(ext))return '⌘';return '◇'}
+function render(){
+ count.textContent=`${entries.length} item${entries.length===1?'':'s'}`;
+ if(!entries.length){library.innerHTML='<div class="empty">Your vault is empty.<br>Add files to see them here.</div>';return}
+ library.innerHTML='';
+ entries.forEach((f,i)=>{
+  const card=document.createElement('article');card.className='item';
+  const top=document.createElement('div');top.className='item-top';
+  const ic=document.createElement('div');ic.className='fileicon';ic.textContent=icon(f);
+  const info=document.createElement('div');info.style.minWidth='0';
+  const name=document.createElement('div');name.className='filename';name.textContent=f.name;
+  const meta=document.createElement('div');meta.className='meta';meta.textContent=`${fmt(f.size)} · ${f.type||'Unknown file type'}`;
+  info.append(name,meta);top.append(ic,info);
+  const actions=document.createElement('div');actions.className='item-actions';
+  const open=document.createElement('button');open.className='btn';open.textContent='Open';open.onclick=()=>{const url=URL.createObjectURL(f);const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000)};
+  const remove=document.createElement('button');remove.className='btn danger';remove.textContent='Remove';remove.onclick=()=>{entries.splice(i,1);render()};
+  actions.append(open,remove);card.append(top,actions);library.append(card);
+ });
+}
+function choose(){input.click()}
+document.getElementById('addBtn').onclick=choose;document.getElementById('addTop').onclick=choose;
+input.addEventListener('change',()=>{entries.push(...Array.from(input.files));render();input.value=''});
+let installPrompt;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;document.getElementById('installBtn').hidden=false});
+document.getElementById('installBtn').onclick=async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;document.getElementById('installBtn').hidden=true};
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
